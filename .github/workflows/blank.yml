@@ -1,0 +1,31 @@
+name: Issue Changes
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 2,14 * * *' # Runs at 8 AM and 8 PM IST
+  workflow_dispatch:
+    inputs:
+      manual_trigger:
+        description: 'Manually trigger the workflow'
+        required: false
+
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+    
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Run demo.sh script
+      run: |
+        #!/bin/bash
+        mkdir demo1;
+        touch demo1/test.txt
+        mkdir demo2;
+        rsync -av demo1/ demo2/
+        ls ./demo2/
